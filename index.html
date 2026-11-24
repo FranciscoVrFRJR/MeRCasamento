@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz 10 Anos de Casamento, Marcella & Rômulo! ✨❤️</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Ícone da aba do navegador -->
+    <link rel="icon" href="icone.ico" type="image/x-icon">
+    <!-- Fontes do Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Dancing+Script:wght@600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Fundo inspirado nas colagens (Scrapbook Noturno Elegante) */
+        body {
+            font-family: 'Lora', serif;
+            background: radial-gradient(circle at top, #1f191c 0%, #110e10 55%, #090809 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #f3f4f6;
+        }
+
+        .font-title {
+            font-family: 'Cinzel', serif;
+        }
+
+        .font-script {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .font-sans-clean {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Canvas de Corações e Estrelas Flutuantes */
+        #skyCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Efeito de Envelope Interativo */
+        .envelope-wrapper {
+            perspective: 1200px;
+            transition: all 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .envelope {
+            position: relative;
+            background: linear-gradient(145deg, #1b1719 0%, #141113 100%);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.75), 0 0 30px rgba(196, 125, 125, 0.15);
+            transition: transform 1.6s ease, box-shadow 1.6s ease;
+            border: 1px solid rgba(212, 175, 55, 0.28);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(180deg, #262023 0%, #1b1719 100%);
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transform-origin: top center;
+            transition: transform 1.6s ease, opacity 1.2s ease;
+            z-index: 10;
+            border-top: 1px solid rgba(212, 175, 55, 0.4);
+        }
+
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+
+        /* Brilho Dourado e Rosé */
+        .glow-effect {
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Selo inspirado no Rosé Antigo dos corações da colagem */
+        .wax-seal {
+            background: radial-gradient(circle at 30% 30%, #c97b7b, #8f4a4a);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 15px rgba(201, 123, 123, 0.4);
+            border: 1px solid rgba(253, 224, 71, 0.45);
+            transition: transform 0.6s ease, box-shadow 0.6s ease;
+        }
+
+        .wax-seal:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 22px rgba(245, 194, 107, 0.45);
+        }
+
+        /* Animação do Conteúdo abrindo (velocidade reduzida pela metade) */
+        .letter-content {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.8s ease 0.8s, transform 1.8s ease 0.8s;
+        }
+
+        .envelope.open .letter-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #110e10;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #b86b6b;
+            border-radius: 10px;
+        }
+
+        /* Parágrafos da Carta */
+        .story-paragraph {
+            text-align: justify;
+            text-justify: inter-word;
+            line-height: 1.85;
+            color: #e5e7eb;
+            position: relative;
+        }
+
+        .story-paragraph::first-letter {
+            font-size: 2.3rem;
+            font-family: 'Dancing Script', cursive;
+            color: #e29595;
+            float: left;
+            line-height: 1;
+            padding-right: 8px;
+            padding-top: 2px;
+            font-weight: bold;
+        }
+
+        /* Moldura estilo Polaroid igual à colagem */
+        .polaroid-card {
+            background: #fdfcfb;
+            padding: 8px 8px 24px 8px;
+            border-radius: 3px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.65);
+            transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1), z-index 0s;
+            position: relative;
+        }
+
+        .polaroid-card:hover {
+            transform: scale(1.06) rotate(0deg) !important;
+            z-index: 30;
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.25);
+        }
+
+        .polaroid-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            border: 1px solid #ece8e4;
+        }
+
+        /* Botão Flutuante de Música */
+        .audio-btn {
+            backdrop-filter: blur(8px);
+            background: rgba(27, 23, 25, 0.85);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+        }
+
+        @keyframes subtlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+        }
+        .pulse-subtle {
+            animation: subtlePulse 3s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="relative flex flex-col items-center justify-center min-h-screen p-4 sm:p-6 md:p-10">
+
+    <!-- Canvas de Animação dos Corações e Estrelas -->
+    <canvas id="skyCanvas"></canvas>
+
+    <!-- Elemento de Áudio de Fundo (M.mp3) em Loop -->
+    <audio id="bgMusic" src="M.mp3" preload="auto" loop></audio>
+
+    <!-- Controle Único de Música -->
+    <div class="fixed top-4 right-4 z-50">
+        <button id="musicToggleBtn" onclick="toggleAudio()" class="audio-btn p-3 rounded-full text-amber-300 hover:text-amber-200 shadow-lg transition-all duration-300 flex items-center justify-center w-12 h-12" title="Música de Fundo">
+            <i id="musicIcon" class="fas fa-music text-lg"></i>
+        </button>
+    </div>
+
+    <!-- Conteiner Principal -->
+    <main class="w-full max-w-4xl z-10 my-auto py-8">
+        
+        <!-- ENVELOPE / CARTA CONTAINER -->
+        <div id="envelopeWrapper" class="envelope-wrapper w-full">
+            <div id="envelope" class="envelope rounded-2xl p-6 sm:p-10 md:p-14 relative overflow-hidden transition-all duration-1000">
+                
+                <!-- ABA DO ENVELOPE -->
+                <div id="envelopeFlap" class="envelope-flap flex items-end justify-center pb-4 cursor-pointer" onclick="openLetter()">
+                    <div class="wax-seal w-16 h-16 sm:w-20 sm:h-20 rounded-full flex flex-col items-center justify-center text-white cursor-pointer z-20 transform translate-y-8 shadow-2xl">
+                        <!-- 2 Alianças de Casamento de Ouro -->
+                        <svg class="w-7 h-7 sm:w-8 sm:h-8 mb-0.5 drop-shadow" viewBox="0 0 64 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <defs>
+                                <linearGradient id="goldRingSeal" x1="0" y1="0" x2="64" y2="40" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stop-color="#fef08a"/>
+                                    <stop offset="50%" stop-color="#f59e0b"/>
+                                    <stop offset="100%" stop-color="#fde047"/>
+                                </linearGradient>
+                            </defs>
+                            <circle cx="24" cy="21" r="12.5" stroke="url(#goldRingSeal)" stroke-width="4.2"/>
+                            <circle cx="40" cy="21" r="12.5" stroke="url(#goldRingSeal)" stroke-width="4.2"/>
+                            <path d="M32 10.5A12.5 12.5 0 0 1 35.2 14" stroke="#fef9c3" stroke-width="2.5" stroke-linecap="round"/>
+                        </svg>
+                        <span class="font-sans-clean text-[10px] sm:text-xs tracking-widest uppercase font-semibold text-amber-100">Abrir</span>
+                    </div>
+                </div>
+
+                <!-- TELA INICIAL (CAPA DO ENVELOPE) -->
+                <div id="coverContent" class="py-16 sm:py-24 text-center flex flex-col items-center justify-center cursor-pointer" onclick="openLetter()">
+                    <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-rose-950/50 border border-amber-400/30 mb-6 pulse-subtle">
+                        <!-- 2 Alianças de Casamento de Ouro no lugar do coração sob o botão abrir -->
+                        <svg class="w-10 h-10 drop-shadow" viewBox="0 0 64 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <defs>
+                                <linearGradient id="goldRingCover" x1="0" y1="0" x2="64" y2="40" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stop-color="#fef08a"/>
+                                    <stop offset="50%" stop-color="#f59e0b"/>
+                                    <stop offset="100%" stop-color="#fde047"/>
+                                </linearGradient>
+                            </defs>
+                            <circle cx="24" cy="21" r="12.5" stroke="url(#goldRingCover)" stroke-width="4.2"/>
+                            <circle cx="40" cy="21" r="12.5" stroke="url(#goldRingCover)" stroke-width="4.2"/>
+                            <path d="M32 10.5A12.5 12.5 0 0 1 35.2 14" stroke="#fef9c3" stroke-width="2.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <span class="font-sans-clean text-xs text-amber-300/80 tracking-[0.25em] uppercase mb-2">03 de Dezembro</span>
+                    <h2 class="font-title text-2xl sm:text-4xl text-white font-bold mb-3 tracking-wide">Aniversário de Casamento</h2>
+                    <p class="font-script text-3xl sm:text-4xl text-[#e29595] mb-6">Marcella &amp; Rômulo ✨</p>
+                    <p class="font-sans-clean text-xs sm:text-sm text-gray-400 tracking-widest uppercase">Toque no selo para abrir essa homenagem</p>
+                </div>
+
+                <!-- CONTEÚDO DA CARTA (OCULTO INICIALMENTE) -->
+                <div id="letterContent" class="letter-content hidden">
+                    
+                    <!-- Cabeçalho Elegante -->
+                    <header class="text-center mb-10 pb-8 border-b border-amber-400/20 relative">
+                        <div class="inline-block px-4 py-1 bg-rose-950/60 border border-[#c97b7b]/40 text-[#e8a5a5] rounded-full font-sans-clean text-xs font-semibold tracking-wider uppercase mb-3">
+                            <i class="far fa-calendar-alt mr-1 text-amber-300"></i> 03 de Dezembro • 10 Anos de Casamento
+                        </div>
+                        <h1 class="font-title text-2xl sm:text-4xl text-white font-bold mb-2 tracking-wide leading-tight">
+                            💙💍 10 anos de nós! 💙
+                        </h1>
+                        <p class="font-script text-3xl sm:text-4xl text-[#e29595] mt-1">Marcella &amp; Rômulo</p>
+                        
+                        <!-- Ornamento Estrela e 2 Alianças de Ouro -->
+                        <div class="flex justify-center items-center gap-3 mt-4 text-amber-300/70">
+                            <span class="w-12 h-[1px] bg-gradient-to-r from-transparent to-amber-300/60"></span>
+                            <i class="fas fa-star text-[10px]"></i>
+                            <svg class="w-6 h-4" viewBox="0 0 64 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <defs>
+                                    <linearGradient id="goldRingHeader" x1="0" y1="0" x2="64" y2="40" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0%" stop-color="#fef08a"/>
+                                        <stop offset="50%" stop-color="#f59e0b"/>
+                                        <stop offset="100%" stop-color="#fde047"/>
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="24" cy="21" r="12.5" stroke="url(#goldRingHeader)" stroke-width="4.5"/>
+                                <circle cx="40" cy="21" r="12.5" stroke="url(#goldRingHeader)" stroke-width="4.5"/>
+                                <path d="M32 10.5A12.5 12.5 0 0 1 35.2 14" stroke="#fef9c3" stroke-width="2.5" stroke-linecap="round"/>
+                            </svg>
+                            <i class="fas fa-star text-[10px]"></i>
+                            <span class="w-12 h-[1px] bg-gradient-to-l from-transparent to-amber-300/60"></span>
+                        </div>
+                    </header>
+
+                    <!-- Mensagem Principal -->
+                    <article class="space-y-6 text-base sm:text-lg leading-relaxed">
+                        
+                        <p class="story-paragraph">
+                            Uma década ao lado da pessoa que escolhi para compartilhar a vida, os sonhos, os desafios e os momentos mais especiais da minha história.
+                        </p>
+
+                        <p class="story-paragraph">
+                            Nesses 10 anos, vivemos tantas coisas… Sorrimos, aprendemos, superamos dificuldades e construímos uma história que é só nossa. Nem todos os dias foram perfeitos, mas cada um deles nos ensinou algo sobre o amor, a parceria e a importância de caminhar juntos.
+                        </p>
+
+                        <p class="story-paragraph">
+                            E, claro, não poderia faltar um pouquinho das nossas bobeiras, porque amar também é saber rir das pequenas coisas, e sempre continuar sendo o melhor um do outro. 💙💙
+                        </p>
+
+                        <!-- Frase em Destaque com 2 Alianças de Ouro Centralizadas Abaixo -->
+                        <div class="my-8 p-6 bg-black/40 rounded-2xl border border-amber-400/25 flex flex-col items-center justify-center text-center relative overflow-hidden">
+                            <i class="fas fa-sparkles text-amber-300/30 text-2xl absolute top-3 right-4"></i>
+                            <p class="font-script text-2xl sm:text-3xl text-[#f3dada] leading-relaxed relative z-10">
+                                “O amor não se explica, se vive. Cada momento juntos é o lugar favorito no mundo.”
+                            </p>
+                            <svg class="w-9 h-6 mt-4 relative z-10 opacity-85" viewBox="0 0 64 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <defs>
+                                    <linearGradient id="goldRingQuote" x1="0" y1="0" x2="64" y2="40" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0%" stop-color="#fef08a"/>
+                                        <stop offset="50%" stop-color="#f59e0b"/>
+                                        <stop offset="100%" stop-color="#fde047"/>
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="24" cy="21" r="12.5" stroke="url(#goldRingQuote)" stroke-width="4.4"/>
+                                <circle cx="40" cy="21" r="12.5" stroke="url(#goldRingQuote)" stroke-width="4.4"/>
+                                <path d="M32 10.5A12.5 12.5 0 0 1 35.2 14" stroke="#fef9c3" stroke-width="2.5" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+
+                        <!-- GALERIA ESTILO SCRAPBOOK / POLAROID -->
+                        <section class="my-10">
+                            <div class="text-center mb-6">
+                                <span class="font-sans-clean text-[11px] uppercase tracking-[0.2em] text-amber-300/80">Nossas Melhores Lembranças</span>
+                                <h3 class="font-title text-xl text-white mt-1">Momentos Eternizados</h3>
+                            </div>
+
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5 px-1">
+                                <!-- Foto 1 -->
+                                <div class="polaroid-card transform -rotate-2">
+                                    <img src="6.jpeg" alt="Marcella e Rômulo na neve">
+                                    <p class="font-script text-gray-700 text-center text-lg mt-2 leading-none">Na neve ❄️</p>
+                                </div>
+                                <!-- Foto 2 -->
+                                <div class="polaroid-card transform rotate-2">
+                                    <img src="4.jpeg" alt="Brinde na vinícola">
+                                    <p class="font-script text-gray-700 text-center text-lg mt-2 leading-none">Brindando a vida 🍷</p>
+                                </div>
+                                <!-- Foto 3 -->
+                                <div class="polaroid-card transform -rotate-1">
+                                    <img src="7.jpeg" alt="Beijo nas montanhas">
+                                    <p class="font-script text-gray-700 text-center text-lg mt-2 leading-none">Sintonia pura ❤️</p>
+                                </div>
+                                <!-- Foto 4 -->
+                                <div class="polaroid-card transform rotate-2">
+                                    <img src="2.jpeg" alt="Curtição e música">
+                                    <p class="font-script text-gray-700 text-center text-lg mt-2 leading-none">Sempre juntos 🤘</p>
+                                </div>
+                                <!-- Foto 5 -->
+                                <div class="polaroid-card transform rotate-1">
+                                    <img src="5.jpeg" alt="Noite especial">
+                                    <p class="font-script text-gray-700 text-center text-lg mt-2 leading-none">Noite especial ✨</p>
+                                </div>
+                                <!-- Foto 6 -->
+                                <div class="polaroid-card transform -rotate-2">
+                                    <img src="8.jpeg" alt="Aventuras a dois">
+                                    <p class="font-script text-gray-700 text-center text-lg mt-2 leading-none">Parceria ✌️</p>
+                                </div>
+                                <!-- Foto 7 -->
+                                <div class="polaroid-card transform rotate-2">
+                                    <img src="3.jpeg" alt="Sorrisos">
+                                    <p class="font-script text-gray-700 text-center text-lg mt-2 leading-none">Alegria diária 😊</p>
+                                </div>
+                                <!-- Foto 8 -->
+                                <div class="polaroid-card transform -rotate-1">
+                                    <img src="9.jpeg" alt="Cumplicidade">
+                                    <p class="font-script text-gray-700 text-center text-lg mt-2 leading-none">Para sempre 💕</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <p class="story-paragraph">
+                            Hoje, olhando para tudo o que vivemos, meu coração se enche de gratidão por ter você ao meu lado. Se pudesse voltar no tempo, faria a mesma escolha: escolheria você, nossa história e tudo o que ainda temos para viver.
+                        </p>
+
+                        <p class="story-paragraph">
+                            Que venham muitos outros anos, com mais amor, cumplicidade, saúde e sonhos realizados. Que a gente nunca perca a vontade de se cuidar, de se abraçar e de continuar se apaixonando um pelo outro, mesmo com o passar do tempo.
+                        </p>
+
+                        <p class="story-paragraph">
+                            Feliz 10 anos de casamento para nós! Que nossa história continue sendo escrita com amor, respeito e a certeza de que, juntos, somos mais fortes.
+                        </p>
+
+                    </article>
+
+                    <!-- Assinatura Elegante -->
+                    <footer class="mt-12 pt-6 border-t border-amber-400/20 text-center">
+                        <p class="font-script text-3xl text-[#e29595] mb-3">Te amo hoje, amanhã e em todos os dias que ainda virão!</p>
+                        <div class="flex justify-center items-center gap-4 text-2xl sm:text-3xl mb-4">
+                            <span>💙</span>
+                            <span>💙</span>
+                            <span>♾️</span>
+                            <span>💍</span>
+                        </div>
+                        <p class="font-title font-bold text-amber-200 text-xl tracking-wider">MARCELLA !</p>
+                    </footer>
+
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Rodapé Sutil -->
+    <footer class="text-center text-xs text-gray-400/70 font-sans-clean mt-auto pb-4 z-10">
+        Marcella &amp; Rômulo • 10 Anos de Casamento • 03 de Dezembro ✨
+    </footer>
+
+    <!-- LÓGICA DE ÁUDIO DE FUNDO (M.mp3) E ANIMAÇÃO DE CORAÇÕES + ESTRELAS -->
+    <script>
+        let isMusicPlaying = false;
+        const bgMusic = document.getElementById('bgMusic');
+        bgMusic.loop = true;
+
+        function toggleAudio() {
+            const musicIcon = document.getElementById('musicIcon');
+            const musicBtn = document.getElementById('musicToggleBtn');
+
+            if (!bgMusic) return;
+
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                isMusicPlaying = false;
+                musicIcon.className = "fas fa-music text-lg";
+                musicBtn.classList.remove('bg-amber-900/40', 'animate-pulse');
+            } else {
+                bgMusic.play().then(() => {
+                    isMusicPlaying = true;
+                    musicIcon.className = "fas fa-pause text-lg text-amber-300";
+                    musicBtn.classList.add('bg-amber-900/40', 'animate-pulse');
+                }).catch(error => {
+                    console.error("Erro ao reproduzir a música:", error);
+                });
+            }
+        }
+
+        function openLetter() {
+            const envelope = document.getElementById('envelope');
+            const envelopeFlap = document.getElementById('envelopeFlap');
+            const coverContent = document.getElementById('coverContent');
+            const letterContent = document.getElementById('letterContent');
+
+            if (!isMusicPlaying) {
+                toggleAudio();
+            }
+
+            envelopeFlap.style.transform = 'rotateX(180deg)';
+            envelopeFlap.style.opacity = '0';
+            envelopeFlap.style.pointerEvents = 'none';
+
+            setTimeout(() => {
+                coverContent.classList.add('hidden');
+                letterContent.classList.remove('hidden');
+                envelope.classList.add('open', 'glow-effect');
+                
+                triggerCelebrationShower();
+            }, 800);
+        }
+
+        // ANIMAÇÃO DE CORAÇÕES E ESTRELAS SUBINDO
+        const canvas = document.getElementById('skyCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        class FloatingElement {
+            constructor(customX, customY, customSpeed) {
+                this.reset(customX, customY, customSpeed);
+            }
+
+            reset(customX, customY, customSpeed) {
+                this.x = customX !== undefined ? customX : Math.random() * width;
+                this.y = customY !== undefined ? customY : height + 20;
+                this.type = Math.random() > 0.45 ? 'heart' : 'star';
+                this.size = this.type === 'heart' ? (Math.random() * 13 + 8) : (Math.random() * 7 + 4);
+                this.speedY = customSpeed || (Math.random() * 1.1 + 0.5);
+                this.opacity = Math.random() * 0.55 + 0.25;
+                this.swing = Math.random() * 0.04;
+                this.swingAngle = Math.random() * Math.PI * 2;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.02;
+
+                if (this.type === 'heart') {
+                    const roseShades = [
+                        `rgba(201, 123, 123, ${this.opacity})`,
+                        `rgba(226, 149, 149, ${this.opacity})`,
+                        `rgba(184, 107, 107, ${this.opacity})`
+                    ];
+                    this.color = roseShades[Math.floor(Math.random() * roseShades.length)];
+                } else {
+                    const starShades = [
+                        `rgba(252, 211, 77, ${this.opacity})`,
+                        `rgba(255, 255, 255, ${this.opacity})`,
+                        `rgba(245, 194, 107, ${this.opacity})`
+                    ];
+                    this.color = starShades[Math.floor(Math.random() * starShades.length)];
+                }
+            }
+
+            update() {
+                this.y -= this.speedY;
+                this.swingAngle += this.swing;
+                this.x += Math.sin(this.swingAngle) * 0.7;
+                this.rotation += this.rotationSpeed;
+
+                if (this.y < -30) {
+                    this.reset();
+                }
+            }
+
+            drawHeart() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                const topCurveHeight = this.size * 0.3;
+                ctx.moveTo(0, topCurveHeight);
+                ctx.bezierCurveTo(0, 0, -this.size / 2, 0, -this.size / 2, topCurveHeight);
+                ctx.bezierCurveTo(-this.size / 2, (this.size + topCurveHeight) / 2, 0, this.size, 0, this.size);
+                ctx.bezierCurveTo(0, this.size, this.size / 2, (this.size + topCurveHeight) / 2, this.size / 2, topCurveHeight);
+                ctx.bezierCurveTo(this.size / 2, 0, 0, 0, 0, topCurveHeight);
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            }
+
+            drawStar() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                const outer = this.size;
+                const inner = this.size * 0.28;
+                for (let i = 0; i < 4; i++) {
+                    const angle = (i * Math.PI) / 2;
+                    ctx.lineTo(Math.cos(angle) * outer, Math.sin(angle) * outer);
+                    const midAngle = angle + Math.PI / 4;
+                    ctx.lineTo(Math.cos(midAngle) * inner, Math.sin(midAngle) * inner);
+                }
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            }
+
+            draw() {
+                if (this.type === 'heart') {
+                    this.drawHeart();
+                } else {
+                    this.drawStar();
+                }
+            }
+        }
+
+        const particles = Array.from({ length: 42 }, () => new FloatingElement());
+
+        function triggerCelebrationShower() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    particles.push(new FloatingElement(Math.random() * width, height + 10, Math.random() * 1.2 + 0.7));
+                }, i * 100);
+            }
+        }
+
+        function animateSky() {
+            ctx.clearRect(0, 0, width, height);
+            
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+
+            if (particles.length > 75) {
+                particles.splice(0, particles.length - 75);
+            }
+
+            requestAnimationFrame(animateSky);
+        }
+
+        window.onload = () => {
+            animateSky();
+        };
+    </script>
+</body>
+</html>
